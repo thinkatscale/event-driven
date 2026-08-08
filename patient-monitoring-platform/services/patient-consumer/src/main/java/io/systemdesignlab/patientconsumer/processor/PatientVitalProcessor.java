@@ -2,8 +2,10 @@ package io.systemdesignlab.patientconsumer.processor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.systemdesignlab.patientconsumer.entity.PatientVitalEntity;
+import io.systemdesignlab.patientconsumer.entity.ProcessedEventEntity;
 import io.systemdesignlab.patientconsumer.event.PatientVitalRecordedEvent;
 import io.systemdesignlab.patientconsumer.repository.PatientVitalRepository;
+import io.systemdesignlab.patientconsumer.repository.ProcessedEventRepository;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -35,8 +37,10 @@ public class PatientVitalProcessor
 
     private final PatientVitalRepository repository;
 
-    public PatientVitalProcessor(PatientVitalRepository repository) {
+    private final ProcessedEventRepository processedEventRepository;
+    public PatientVitalProcessor(PatientVitalRepository repository, ProcessedEventRepository processedEventRepository) {
         this.repository = repository;
+        this.processedEventRepository = processedEventRepository;
     }
     public void process(PatientVitalRecordedEvent event)
     {
@@ -91,9 +95,36 @@ public class PatientVitalProcessor
             PatientVitalRecordedEvent event,
             PatientVitalStatus status)
     {
-        throw new RuntimeException("Testing DLQ");
+        if (processedEventRepository.existsById(event.eventId())) {
 
+            System.out.println("--------------------------------");
+            System.out.println("Duplicate Event Detected");
+            System.out.println("Event Id : " + event.eventId());
+            System.out.println("--------------------------------");
 
+            return;
+        }
+        PatientVitalEntity entity = new PatientVitalEntity();
+
+        entity.setPatientId(event.patientId());
+        entity.setHeartRate(event.heartRate());
+        entity.setOxygen(event.oxygen());
+        entity.setTemperature(event.temperature());
+        entity.setStatus(status);
+        entity.setReceivedAt(LocalDateTime.now());
+
+        repository.save(entity);
+        ProcessedEventEntity processedEvent = new ProcessedEventEntity();
+
+        processedEvent.setEventId(event.eventId());
+        processedEvent.setProcessedAt(LocalDateTime.now());
+
+        processedEventRepository.save(processedEvent);
+
+        System.out.println("--------------------------------");
+        System.out.println("Event Processed Successfully");
+        System.out.println("Event Id : " + event.eventId());
+        System.out.println("--------------------------------");
 
     }
 

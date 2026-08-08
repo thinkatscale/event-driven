@@ -6,6 +6,8 @@ import io.systemdesignlab.patientapi.event.PatientVitalRecordedEvent;
 import io.systemdesignlab.patientapi.publisher.PatientEventPublisher;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class PatientVitalService {
     private final PatientEventPublisher producer;
@@ -19,6 +21,8 @@ public class PatientVitalService {
     //recordVital
     public void recordVital(Long patientId,PatientVitalRequest request) throws JsonProcessingException {
         PatientVitalRecordedEvent event = new PatientVitalRecordedEvent(
+                //UUID.randomUUID(),
+                UUID.fromString("11111111-1111-1111-1111-111111111111"),
                 patientId,
                 request.heartRate(),
                 request.oxygen(),

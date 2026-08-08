@@ -1,4 +1,4 @@
-# patient-consumer project
+# patient-consumer
 
 Consumer service that subscribes to the `patient-vitals` Kafka topic and processes patient vital events.
 

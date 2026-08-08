@@ -1,7 +1,9 @@
 package io.systemdesignlab.patientapi.event;
 
-public record PatientVitalRecordedEvent(
+import java.util.UUID;
 
+public record PatientVitalRecordedEvent(
+        UUID eventId,
         Long patientId,
 
         Integer heartRate,

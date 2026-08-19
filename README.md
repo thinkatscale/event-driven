@@ -1,4 +1,4 @@
-# 🏥 Patient Monitoring Platform – Event-Driven Architecture with Spring Boot & Kafka
+# 🏥 Patient Monitoring Platform – Event-Driven Architecture with Spring Boot & Kafka-v1
 
 A hands-on event-driven backend application demonstrating how patient vital data flows through a modern distributed architecture using **Spring Boot**, **Apache Kafka**, **Spring Data JPA**, and **PostgreSQL**.
 

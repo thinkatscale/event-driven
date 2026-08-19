@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/patient_monitor
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  kafka:
+    consumer:
+      group-id: patient-monitoring-consumer-audit
+
+logging:
+  level:
+    org.postgresql: DEBUG
+    org.springframework.kafka: DEBUG
+
+kafka:
+  topic:
+    patient-vitals: patient-vitals
+    patient-vitals-dlt: patient-vitals-dlt

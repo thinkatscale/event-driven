@@ -1,11 +1,18 @@
 package io.systemdesignlab.patientauditconsumer.consumer;
 
 import io.systemdesignlab.patientauditconsumer.event.PatientVitalRecordedEvent;
+import io.systemdesignlab.patientauditconsumer.service.AuditService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PatientAuditConsumer {
+
+    private final AuditService auditService;
+
+    public PatientAuditConsumer(AuditService auditService) {
+        this.auditService = auditService;
+    }
 
     @KafkaListener(
             topics = "${kafka.topic.patient-vitals}"
@@ -21,5 +28,7 @@ public class PatientAuditConsumer {
         System.out.println("Heart Rate : " + event.heartRate());
         System.out.println("Oxygen     : " + event.oxygen());
         System.out.println("Temperature: " + event.temperature());
+
+        auditService.record(event);
     }
 }

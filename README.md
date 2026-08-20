@@ -5,6 +5,11 @@ A hands-on event-driven backend application demonstrating how patient vital data
 The project is designed as a learning lab for developers transitioning from traditional CRUD applications to event-driven microservices.
 
 ---
+## Why this project?
+
+Many Spring Boot tutorials stop after demonstrating CRUD operations. This repository explores the next step—building a simple but realistic event-driven backend that illustrates how modern systems process events asynchronously while keeping business logic modular and maintainable.
+
+---
 
 ## Architecture
 
@@ -134,12 +139,3 @@ services/
     ├── service
     └── config
 ```
-
----
-
-## Why this project?
-
-Many Spring Boot tutorials stop after demonstrating CRUD operations. This repository explores the next step—building a simple but realistic event-driven backend that illustrates how modern systems process events asynchronously while keeping business logic modular and maintainable.
-
----
-

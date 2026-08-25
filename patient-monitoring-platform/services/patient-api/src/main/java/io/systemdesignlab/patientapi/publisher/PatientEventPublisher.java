@@ -25,6 +25,11 @@ public class PatientEventPublisher
         int nPartitionKey=
         Integer.parseInt (String.valueOf(event.patientId()%3));
         //kafkaTemplate.send(TOPIC, String.valueOf(nPartitionKey), objectMapper.writeValueAsString(event));
-        kafkaTemplate.send(TOPIC,String.valueOf(nPartitionKey),event);
+        //kafkaTemplate.send(TOPIC,String.valueOf(nPartitionKey),event);
+        kafkaTemplate.send(
+                TOPIC,
+                String.valueOf(event.patientId()),
+                event
+        );
     }
 }
